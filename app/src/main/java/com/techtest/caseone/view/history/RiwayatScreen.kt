@@ -1,4 +1,4 @@
-package com.techtest.caseone.view
+package com.techtest.caseone.view.history
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -8,13 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
-import com.techtest.caseone.presentation.PaymentViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.techtest.caseone.presentation.RiwayatViewModel
 
 @Composable
-fun PembayaranScreen(navCon : NavHostController){
+fun RiwayatScreen(navCon : NavHostController, viewModel : RiwayatViewModel){
 
-    Box(modifier = Modifier.fillMaxSize().background(color = Color.Blue)) {
+    Box(modifier = Modifier.fillMaxSize().background(color = Color.Red)) {
         Column(modifier = Modifier.fillMaxSize()) {
 
         }

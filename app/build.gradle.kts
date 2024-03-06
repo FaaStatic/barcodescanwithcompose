@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.techtest.caseone"
-        minSdk = 34
+        minSdk = 33
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -84,6 +84,9 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:${camerax_version}")
     implementation("androidx.camera:camera-view:${camerax_version}")
     implementation("com.google.mlkit:barcode-scanning:17.2.0")
+
+    //permission handler
+    implementation("com.google.accompanist:accompanist-permissions:0.35.0-alpha")
 
 
     // ViewModel

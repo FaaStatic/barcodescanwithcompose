@@ -7,9 +7,11 @@ import java.time.LocalDateTime
 
 @Entity(tableName = "transaction_table")
 data class TransactionEntitiy(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    var id:Int? = 0,
     @ColumnInfo(name = "id_transaksi")
-    var id_trx:Int? = 0,
+    var id_trx:String? = null,
     @ColumnInfo(name = "nama_merchant")
     var nama_merchant:String? = null,
     @ColumnInfo(name = "bank_merchant")

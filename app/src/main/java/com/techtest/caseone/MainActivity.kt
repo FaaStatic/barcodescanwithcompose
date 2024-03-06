@@ -7,25 +7,29 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.techtest.caseone.domain.model.TransactionEntitiy
+import com.techtest.caseone.presentation.InputTransaksiViewModel
+import com.techtest.caseone.presentation.PaymentViewModel
+import com.techtest.caseone.presentation.RiwayatViewModel
 import com.techtest.caseone.util.nav.BottomNavigationViewMenu
 import com.techtest.caseone.ui.theme.QrcodescannerTheme
-import com.techtest.caseone.view.HomeScreen
-import com.techtest.caseone.view.PembayaranScreen
-import com.techtest.caseone.view.RiwayatScreen
-import com.techtest.caseone.view.ScanQRScreen
+import com.techtest.caseone.view.home.HomeScreen
+import com.techtest.caseone.view.payment.PembayaranScreen
+import com.techtest.caseone.view.history.RiwayatScreen
+import com.techtest.caseone.view.payment.detailPaymentScreen
+import com.techtest.caseone.view.scanning.ScanQRScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -53,10 +57,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyApp(){
     val navControl = rememberNavController()
-        Scaffold (
+
+    Scaffold (
             bottomBar = { BottomNavigationViewMenu(navControl = navControl)},
-        ){
-            Column (
+        ){ it ->
+        Column (
                 modifier = Modifier.padding(it)
             ) {
                  NavHost(navController = navControl, startDestination = "home", builder ={
@@ -64,13 +69,41 @@ fun MyApp(){
                          HomeScreen(navCon = navControl )
                      }
                      composable(route = "history"){
-                         PembayaranScreen(navCon = navControl)
+                         val viewModel = hiltViewModel<PaymentViewModel>()
+                         PembayaranScreen(navCon = navControl,viewModel)
                      }
                      composable(route = "scanqr"){
-                         ScanQRScreen(navCon = navControl)
+                         val viewModel = hiltViewModel<InputTransaksiViewModel>()
+                         ScanQRScreen(navCon = navControl,viewModel)
                      }
                      composable(route = "payment"){
-                         RiwayatScreen(navCon = navControl)
+                         val viewModel = hiltViewModel<RiwayatViewModel>()
+                         RiwayatScreen(navCon = navControl, viewModel)
+                     }
+                     composable(route = "detailPayment/{id}/{merchant}/{nominal}",  arguments = listOf(
+                         navArgument("nominal") {
+                             type = NavType.IntType
+                             defaultValue = 0
+                         },
+                         navArgument("merchant") {
+                             type = NavType.StringType
+                             nullable = true
+                         },
+                         navArgument("id") {
+                             type = NavType.StringType
+                             nullable = true
+                         },
+
+                     ) ){
+                         val id = it.arguments?.getString("id")
+                         val merchant = it.arguments?.getString("merchant")
+                         val nominal = it.arguments?.getInt("nominal")
+
+                        detailPaymentScreen(navcon = navControl, model = TransactionEntitiy(
+                            id_trx = id,
+                            nama_merchant = merchant,
+                            nominal = nominal
+                        )  )
                      }
                  } )
             }
