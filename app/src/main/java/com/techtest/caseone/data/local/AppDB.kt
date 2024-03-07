@@ -8,7 +8,6 @@ import com.techtest.caseone.domain.dao.AppDAO
 @Database(
     entities = [TransactionEntitiy::class],
     version = 1,
-    exportSchema = false
 )
 abstract class AppDB : RoomDatabase(){
     abstract fun PrimaryDAO(): AppDAO

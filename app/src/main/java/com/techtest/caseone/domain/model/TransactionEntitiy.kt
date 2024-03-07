@@ -1,10 +1,12 @@
 package com.techtest.caseone.domain.model
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.LocalDateTime
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "transaction_table")
 data class TransactionEntitiy(
     @PrimaryKey(autoGenerate = true)
@@ -22,5 +24,5 @@ data class TransactionEntitiy(
     var status_transaksi : Int? = 0,
     @ColumnInfo(name = "tanggal_transaksi")
     var tanggal_transaksi : String? = null,
-    )
+    ):Parcelable
 

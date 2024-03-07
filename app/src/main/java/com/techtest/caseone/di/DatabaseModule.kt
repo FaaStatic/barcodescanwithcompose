@@ -16,17 +16,16 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class DatabaseModule {
-    @Provides
     @Singleton
+    @Provides
     fun createDatabaseProvider(
         @ApplicationContext ctx: Context,
-        provider: Provider<AppDAO>
     ): AppDB {
         return Room.databaseBuilder(
             ctx,
             AppDB::class.java,
             "app_db.db"
-        ).fallbackToDestructiveMigration().build()
+        ).build()
     }
 
     @Provides

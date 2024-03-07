@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.techtest.caseone.domain.model.TransactionEntitiy
+import com.techtest.caseone.presentation.DataStoreViewModel
 import com.techtest.caseone.presentation.InputTransaksiViewModel
 import com.techtest.caseone.presentation.PaymentViewModel
 import com.techtest.caseone.presentation.RiwayatViewModel
@@ -66,19 +67,20 @@ fun MyApp(){
             ) {
                  NavHost(navController = navControl, startDestination = "home", builder ={
                      composable(route = "home"){
-                         HomeScreen(navCon = navControl )
+                         val viewModel = hiltViewModel<DataStoreViewModel>()
+                         HomeScreen(navCon = navControl, viewModel)
                      }
                      composable(route = "history"){
-                         val viewModel = hiltViewModel<PaymentViewModel>()
-                         PembayaranScreen(navCon = navControl,viewModel)
+                         val viewModel = hiltViewModel<RiwayatViewModel>()
+                         RiwayatScreen(navCon = navControl,viewModel)
                      }
                      composable(route = "scanqr"){
                          val viewModel = hiltViewModel<InputTransaksiViewModel>()
                          ScanQRScreen(navCon = navControl,viewModel)
                      }
                      composable(route = "payment"){
-                         val viewModel = hiltViewModel<RiwayatViewModel>()
-                         RiwayatScreen(navCon = navControl, viewModel)
+                         val viewModel = hiltViewModel<PaymentViewModel>()
+                         PembayaranScreen(navCon = navControl, viewModel)
                      }
                      composable(route = "detailPayment/{id}/{merchant}/{nominal}",  arguments = listOf(
                          navArgument("nominal") {
@@ -98,12 +100,12 @@ fun MyApp(){
                          val id = it.arguments?.getString("id")
                          val merchant = it.arguments?.getString("merchant")
                          val nominal = it.arguments?.getInt("nominal")
-
+                         val viewModel = hiltViewModel<DataStoreViewModel>()
                         detailPaymentScreen(navcon = navControl, model = TransactionEntitiy(
                             id_trx = id,
                             nama_merchant = merchant,
                             nominal = nominal
-                        )  )
+                        ) ,viewModel )
                      }
                  } )
             }

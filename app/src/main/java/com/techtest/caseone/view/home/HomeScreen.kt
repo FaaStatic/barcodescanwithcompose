@@ -14,6 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -29,18 +31,18 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.techtest.caseone.data.local.DataPreferences
+import com.techtest.caseone.presentation.DataStoreViewModel
+import kotlin.coroutines.coroutineContext
 
 @Composable
-fun HomeScreen(navCon : NavHostController){
-
-    val dataStore = DataPreferences(context = LocalContext.current)
-    val saldo = dataStore.getSaldoUser.collectAsState(initial = 0)
-    var saldoUtama by remember{ mutableStateOf(0) }
+fun HomeScreen(navCon : NavHostController, viewModel : DataStoreViewModel){
+    val saldo = viewModel.getData().collectAsState(initial = 0)
+    var saldoUtama by remember{ mutableIntStateOf(0) }
     LaunchedEffect(Unit){
         Log.d("saldonya", saldo.value.toString())
-        if(saldo.value == null || saldo.value == 0){
+        if(saldo.value == 0){
             Log.d("kucing", "Masuk")
-            dataStore.editSaldo(5000000)
+            viewModel.updateData(5000000)
             saldoUtama = saldo.value ?: 0
         }else{
             saldoUtama = saldo.value ?: 0
@@ -85,9 +87,3 @@ fun HomeScreen(navCon : NavHostController){
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun TestHome(){
-    val navControl = rememberNavController()
-    HomeScreen(navCon = navControl)
-}

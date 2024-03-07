@@ -11,23 +11,17 @@ import com.techtest.caseone.domain.model.TransactionEntitiy
 import com.techtest.caseone.domain.usecase.AppUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
 class InputTransaksiViewModel @Inject constructor(private val usecase:AppUseCase) :ViewModel() {
-    suspend fun inputData(value : TransactionEntitiy, ctx : Context) {
-        val dataStore = DataPreferences(context = ctx)
-        val result = dataStore.getSaldoUser.asLiveData().value
-        Log.d("ACDC", result.toString())
-        val total = result?.minus(value.nominal!!)
-        if (total != null) {
-            dataStore.editSaldo(total)
-        }
-        viewModelScope.launch (Dispatchers.IO){
-
-            usecase.insertData(value)
-        }
+    suspend fun inputData(value : TransactionEntitiy) {
+viewModelScope.launch {
+    Log.d("VIEW model", "inputData: ")
+    usecase.insertData(value)
+}
     }
 }

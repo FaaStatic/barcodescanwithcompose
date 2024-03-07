@@ -99,7 +99,7 @@ fun cameraView(navcon : NavHostController,viewmodel:InputTransaksiViewModel){
                 isPaused = true
                 Log.d("model", it.id_trx?:"")
                 CoroutineScope(Dispatchers.IO).launch {
-                    viewmodel.inputData(it,context)
+                    viewmodel.inputData(it)
 
                 }
 navcon.navigate("detailPayment/${it.id_trx}/${it.nama_merchant}/${it.nominal}")

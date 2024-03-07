@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -20,14 +21,14 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += mapOf(
-                    "room.schemaLocation" to "$projectDir/schemas",
-                    "room.incremental" to "true"
-                )
-            }
-        }
+//        javaCompileOptions {
+//            annotationProcessorOptions {
+//                arguments += mapOf(
+//                    "room.schemaLocation" to "$projectDir/schemas",
+//                    "room.incremental" to "true"
+//                )
+//            }
+//        }
     }
 
     buildTypes {

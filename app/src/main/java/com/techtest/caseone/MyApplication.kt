@@ -8,7 +8,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.HiltAndroidApp
 
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore("app_preferences")
 @HiltAndroidApp
 class MyApplication : Application() {
 }

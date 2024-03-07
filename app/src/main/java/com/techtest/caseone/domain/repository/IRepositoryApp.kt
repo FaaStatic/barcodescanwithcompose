@@ -7,4 +7,8 @@ interface IRepositoryApp {
     fun getAllTransaction(): Flow<List<TransactionEntitiy>>
     fun getSuccessTransaction(): Flow<List<TransactionEntitiy>>
     suspend fun insertData(value : TransactionEntitiy)
+
+    fun getSaldoUser():Flow<Int>
+    suspend fun editSaldo(token : Int)
+
 }

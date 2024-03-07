@@ -12,7 +12,7 @@ interface AppDAO {
     @Query("SELECT * FROM 'transaction_table' ORDER BY 'id_transaksi' ASC")
     fun getAllTransaksi() : Flow<List<TransactionEntitiy>>
 
-    @Query("SELECT * FROM 'transaction_table' WHERE 'status_transaksi == 1' ORDER BY 'id_transaksi' ASC ")
+    @Query("SELECT * FROM `transaction_table` WHERE  `status_transaksi` = 1 ")
     fun getSuccessTransaksi() : Flow<List<TransactionEntitiy>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
